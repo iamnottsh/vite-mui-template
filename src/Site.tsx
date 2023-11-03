@@ -85,7 +85,13 @@ export default function Site() {
                 }}
               >
                 {路由.map(([page]) => (
-                  <MenuItem key={page} onClick={handleClose}>
+                  <MenuItem
+                    key={page}
+                    component="a"
+                    href={`/${page}`}
+                    onClick={handleClose}
+                    selected={location.pathname === `/${encodeURIComponent(page)}`}
+                  >
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
                 ))}
@@ -95,7 +101,7 @@ export default function Site() {
               variant="h5"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
+              href="/"
               sx={{
                 mr: 2,
                 display: {xs: 'flex', md: 'none'},
@@ -113,8 +119,9 @@ export default function Site() {
               {路由.map(([page]) => (
                 <Button
                   key={page}
+                  href={`/${page}`}
                   onClick={handleClose}
-                  sx={{my: 2, color: 'white', display: 'block'}}
+                  sx={{my: 2, color: 'white', display: 'block', textAlign: 'center', fontWeight: location.pathname === `/${encodeURIComponent(page)}` ? 'bold' : 'normal'}}
                 >
                   {page}
                 </Button>
