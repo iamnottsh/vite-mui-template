@@ -110,12 +110,10 @@ export default function Site() {
         </AppBar>
         <Toolbar/>
       </Box>
-      <Container>
-        <Routes>
-          <Route index element={<Home/>}/>
-          {路由.map(([page, Component]) => <Route key={page} path={`${page}/*`} element={<Component/>}/>)}
-        </Routes>
-      </Container>
+      <Routes>
+        <Route index element={<Home/>}/>
+        {路由.map(([page, Component]) => <Route key={page} path={`${page}/*`} element={<Component/>}/>)}
+      </Routes>
     </BrowserRouter>
   )
 }
