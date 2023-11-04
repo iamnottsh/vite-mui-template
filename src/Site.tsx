@@ -1,5 +1,5 @@
 import MenuIcon from '@mui/icons-material/Menu'
-import {AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography} from '@mui/material'
+import {AppBar, Box, Button, ButtonGroup, Container, IconButton, Menu, MenuItem, Toolbar, Typography} from '@mui/material'
 import {MouseEvent, useEffect, useRef, useState} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import Home from './Home.tsx'
@@ -38,100 +38,79 @@ export default function Site() {
   }
   return (
     <BrowserRouter>
-      <AppBar ref={ref}>
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                display: {xs: 'none', md: 'flex'},
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              模板
-            </Typography>
-            <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
-              <IconButton
-                size="large"
-                onClick={handleOpen}
-                color="inherit"
-              >
-                <MenuIcon/>
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
+      <Box displayPrint="none">
+        <AppBar ref={ref}>
+          <Container maxWidth="xl">
+            <Toolbar disableGutters>
+              <Box sx={{display: {xs: 'flex', md: 'none'}}}>
+                <IconButton
+                  size="large"
+                  onClick={handleOpen}
+                  color="inherit"
+                >
+                  <MenuIcon/>
+                </IconButton>
+                <Menu
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  {路由.map(([page]) => (
+                    <MenuItem
+                      key={page}
+                      component="a"
+                      href={`/${page}`}
+                      onClick={handleClose}
+                      selected={location.pathname === `/${encodeURIComponent(page)}`}
+                    >
+                      <Typography textAlign="center">{page}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+              <Typography
+                variant="h6"
+                noWrap
+                component="a"
+                href="/"
                 sx={{
-                  display: {xs: 'block', md: 'none'},
+                  mr: 2,
+                  fontFamily: 'monospace',
+                  fontWeight: 700,
+                  letterSpacing: '.3rem',
+                  color: 'inherit',
+                  textDecoration: 'none',
                 }}
               >
+                模板
+              </Typography>
+              <ButtonGroup color="inherit" sx={{display: {xs: 'none', md: 'flex'}}}>
                 {路由.map(([page]) => (
-                  <MenuItem
+                  <Button
                     key={page}
-                    component="a"
                     href={`/${page}`}
                     onClick={handleClose}
-                    selected={location.pathname === `/${encodeURIComponent(page)}`}
+                    sx={{fontWeight: location.pathname === `/${encodeURIComponent(page)}` ? 'bold' : 'normal'}}
                   >
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
+                    {page}
+                  </Button>
                 ))}
-              </Menu>
-            </Box>
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                display: {xs: 'flex', md: 'none'},
-                flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              模板
-            </Typography>
-            <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
-              {路由.map(([page]) => (
-                <Button
-                  key={page}
-                  href={`/${page}`}
-                  onClick={handleClose}
-                  sx={{my: 2, color: 'white', display: 'block', textAlign: 'center', fontWeight: location.pathname === `/${encodeURIComponent(page)}` ? 'bold' : 'normal'}}
-                >
-                  {page}
-                </Button>
-              ))}
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-      <Container>
+              </ButtonGroup>
+            </Toolbar>
+          </Container>
+        </AppBar>
         <Toolbar/>
+      </Box>
+      <Container>
         <Routes>
           <Route index element={<Home/>}/>
           {路由.map(([page, Component]) => <Route key={page} path={page} element={<Component/>}/>)}
