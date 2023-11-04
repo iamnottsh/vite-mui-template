@@ -25,6 +25,7 @@ export default function Site() {
         top: element.offsetTop - current.clientHeight,
         left: element.offsetLeft,
       })
+      history.pushState(history.state, '', href)
     }
     document.addEventListener('click', listener)
     return () => document.removeEventListener('click', listener)
