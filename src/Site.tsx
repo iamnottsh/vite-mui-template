@@ -17,7 +17,8 @@ export default function Site() {
       if (!(target instanceof HTMLAnchorElement)) return
       const href = target.getAttribute('href')
       if (!href?.startsWith('#')) return
-      const element = document.getElementById(decodeURIComponent(href.substring(1)))
+      const id = decodeURIComponent(href.substring(1))
+      const element = document.getElementById(id)
       if (!element) return
       event.preventDefault()
       scrollingElement.scrollTo({
@@ -25,7 +26,7 @@ export default function Site() {
         top: element.offsetTop - current.clientHeight,
         left: element.offsetLeft,
       })
-      history.pushState(history.state, '', href)
+      if (decodeURIComponent(location.hash.substring(1)) !== id) history.pushState(history.state, '', href)
     }
     document.addEventListener('click', listener)
     return () => document.removeEventListener('click', listener)
