@@ -100,7 +100,7 @@ export default function Site() {
                   textDecoration: 'none',
                 }}
               >
-                模板
+                {document.title}
               </Typography>
               <ButtonGroup color="inherit" sx={{display: {xs: 'none', md: 'flex'}}}>
                 {路由.map(([page]) => (
