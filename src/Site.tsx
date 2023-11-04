@@ -70,7 +70,7 @@ export default function Site() {
                       component="a"
                       href={`/${page}`}
                       onClick={handleClose}
-                      selected={location.pathname === `/${encodeURIComponent(page)}`}
+                      selected={location.pathname.split('/')[1] === encodeURIComponent(page)}
                     >
                       <Typography textAlign="center">{page}</Typography>
                     </MenuItem>
@@ -99,7 +99,7 @@ export default function Site() {
                     key={page}
                     href={`/${page}`}
                     onClick={handleClose}
-                    sx={{fontWeight: location.pathname === `/${encodeURIComponent(page)}` ? 'bold' : 'normal'}}
+                    sx={{fontWeight: location.pathname.split('/')[1] === encodeURIComponent(page) ? 'bold' : 'normal'}}
                   >
                     {page}
                   </Button>
@@ -113,7 +113,7 @@ export default function Site() {
       <Container>
         <Routes>
           <Route index element={<Home/>}/>
-          {路由.map(([page, Component]) => <Route key={page} path={page} element={<Component/>}/>)}
+          {路由.map(([page, Component]) => <Route key={page} path={`${page}/*`} element={<Component/>}/>)}
         </Routes>
       </Container>
     </BrowserRouter>
