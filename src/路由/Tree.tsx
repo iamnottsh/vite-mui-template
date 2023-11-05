@@ -1,27 +1,7 @@
-import {Container, Drawer, List, ListItemButton, ListItemText, Toolbar} from '@mui/material'
+import {Box, Drawer, List, ListItemButton, ListItemText, Toolbar} from '@mui/material'
 import BananaSlug from 'github-slugger'
-import {ComponentType, Dispatch, MouseEvent, useEffect, useRef, useState} from 'react'
-import {Route, Routes} from 'react-router-dom'
-
-interface ItemProps {
-  title: string
-  id: string
-  level: number
-}
-
-function Item({title, id, level, current, setCurrent}: ItemProps & {current: string, setCurrent: Dispatch<string>}) {
-  const ref = useRef<HTMLAnchorElement | null>(null)
-  const onClick = (event: MouseEvent<HTMLSpanElement>) => {
-    event.preventDefault()
-    event.stopPropagation()
-    ref.current?.click()
-  }
-  return (
-    <ListItemButton selected={current === id} href={`#${id}`} ref={ref} onClick={() => setCurrent(id)}>
-      <ListItemText primary={title} primaryTypographyProps={{noWrap: true, onClick}} sx={{pl: (level - 1) << 1}}/>
-    </ListItemButton>
-  )
-}
+import {ComponentType, useEffect, useRef, useState} from 'react'
+import {Route, Routes, useLocation} from 'react-router-dom'
 
 export interface TreeProps {
   Component: ComponentType
@@ -30,7 +10,7 @@ export interface TreeProps {
 
 export default function Tree({Component, children}: TreeProps) {
   const ref = useRef<HTMLDivElement | null>(null)
-  const [toc, setToc] = useState<ItemProps[]>()
+  const [toc, setToc] = useState<{title: string, id: string, level: number}[]>()
   useEffect(() => {
     const {current} = ref
     if (!current) return
@@ -41,11 +21,11 @@ export default function Tree({Component, children}: TreeProps) {
       return {title, id, level: Number(value.tagName.substring(1))}
     }))
   }, [ref])
-  const [current, setCurrent] = useState(decodeURIComponent(location.hash.substring(1)))
+  const {hash} = useLocation()
   return (
     <Routes>
       <Route index element={
-        <Container sx={{my: 4}} maxWidth="md" ref={ref}>
+        <Box ref={ref}>
           <Component/>
           <Drawer
             anchor="right"
@@ -58,10 +38,13 @@ export default function Tree({Component, children}: TreeProps) {
           >
             <Toolbar/>
             <List>
-              {toc?.map(({title, id, level}) => <Item key={id} title={title} id={id} level={level} current={current} setCurrent={setCurrent}/>)}
+              {toc?.map(({title, id, level}) =>
+                <ListItemButton key={id} href={`#${id}`} selected={`#${encodeURIComponent(id)}` === hash}>
+                  <ListItemText primary={title} primaryTypographyProps={{noWrap: true}} sx={{pl: (level - 1) << 1}}/>
+                </ListItemButton>)}
             </List>
           </Drawer>
-        </Container>
+        </Box>
       }/>
       {children?.map(([page, node]) => <Route key={page} path={`${page}/*`} element={<Tree {...node}/>}/>)}
     </Routes>
