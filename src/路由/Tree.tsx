@@ -1,4 +1,4 @@
-import {Box, Drawer, List, ListItemButton, ListItemText, Toolbar} from '@mui/material'
+import {Box, List, ListItemButton, ListItemText, Toolbar} from '@mui/material'
 import BananaSlug from 'github-slugger'
 import {ComponentType, useEffect, useRef, useState} from 'react'
 import {Route, Routes, useLocation} from 'react-router-dom'
@@ -8,9 +8,15 @@ export interface TreeProps {
   children?: [string, TreeProps][]
 }
 
+const width = 240
+
 export default function Tree({Component, children}: TreeProps) {
   const ref = useRef<HTMLDivElement | null>(null)
-  const [toc, setToc] = useState<{title: string, id: string, level: number}[]>()
+  const [toc, setToc] = useState<{
+    title: string,
+    id: string,
+    level: number
+  }[]>()
   useEffect(() => {
     const {current} = ref
     if (!current) return
@@ -25,26 +31,30 @@ export default function Tree({Component, children}: TreeProps) {
   return (
     <Routes>
       <Route index element={
-        <Box ref={ref}>
-          <Component/>
-          <Drawer
-            anchor="right"
-            open
-            variant="permanent"
-            sx={{displayPrint: 'none'}}
-            PaperProps={{
-              sx: {zIndex: 0, width: {xs: 0, lg: 144, xl: 288}},
-            }}
-          >
-            <Toolbar/>
-            <List>
-              {toc?.map(({title, id, level}) =>
-                <ListItemButton key={id} href={`#${id}`} selected={`#${encodeURIComponent(id)}` === hash}>
-                  <ListItemText primary={title} primaryTypographyProps={{noWrap: true}} sx={{pl: (level - 1) << 1}}/>
-                </ListItemButton>)}
-            </List>
-          </Drawer>
-        </Box>
+        <>
+          <Box display="none" displayPrint="block">
+            <Component/>
+          </Box>
+          <Box ref={ref} width={{xs: '100%', md: `calc(100% - ${width}px)`}} displayPrint="none">
+            <Component/>
+            <Box
+              position="fixed"
+              top={0}
+              right={0}
+              height="100%"
+              overflow="auto"
+              width={{xs: 0, md: width}}
+            >
+              <Toolbar/>
+              <List>
+                {toc?.map(({title, id, level}) =>
+                  <ListItemButton key={id} href={`#${id}`} selected={`#${encodeURIComponent(id)}` === hash}>
+                    <ListItemText primary={title} primaryTypographyProps={{noWrap: true}} sx={{pl: (level - 1) << 1}}/>
+                  </ListItemButton>)}
+              </List>
+            </Box>
+          </Box>
+        </>
       }/>
       {children?.map(([page, node]) => <Route key={page} path={`${page}/*`} element={<Tree {...node}/>}/>)}
     </Routes>

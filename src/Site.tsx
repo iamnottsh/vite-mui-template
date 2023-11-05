@@ -23,7 +23,7 @@ export default function Site() {
         <AppBar ref={ref}>
           <Container maxWidth="xl">
             <Toolbar disableGutters>
-              <Box sx={{display: {xs: 'flex', md: 'none'}}}>
+              <Box sx={{display: {xs: 'flex', lg: 'none'}}}>
                 <IconButton
                   size="large"
                   onClick={handleOpen}
@@ -74,7 +74,7 @@ export default function Site() {
               >
                 {document.title}
               </Typography>
-              <ButtonGroup color="inherit" sx={{display: {xs: 'none', md: 'flex'}}}>
+              <ButtonGroup color="inherit" sx={{display: {xs: 'none', lg: 'flex'}}}>
                 {路由.map(([page]) => (
                   <Button
                     key={page}
