@@ -91,25 +91,22 @@ export default function Site() {
         </AppBar>
         <Toolbar/>
       </Box>
-      <Container
-        maxWidth="md"
-        sx={{
-          ...height !== undefined && {
-            '& :target:before': {
-              display: 'block',
-              content: '" "',
-              height: `${height}px`,
-              marginTop: `${-height}px`,
-              visibility: 'hidden',
-            },
+      <Box sx={{
+        ...height !== undefined && {
+          '& :target:before': {
+            display: 'block',
+            content: '" "',
+            height: `${height}px`,
+            marginTop: `${-height}px`,
+            visibility: 'hidden',
           },
-        }}
-      >
+        },
+      }}>
         <Routes>
           <Route index element={<Home/>}/>
           {路由.map(([page, Component]) => <Route key={page} path={`${page}/*`} element={<Component/>}/>)}
         </Routes>
-      </Container>
+      </Box>
     </BrowserRouter>
   )
 }

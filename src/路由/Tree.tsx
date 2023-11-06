@@ -1,4 +1,4 @@
-import {Box, List, ListItemButton, ListItemText, Toolbar} from '@mui/material'
+import {Box, Container, List, ListItemButton, ListItemText, Toolbar} from '@mui/material'
 import BananaSlug from 'github-slugger'
 import {ComponentType, useEffect, useRef, useState} from 'react'
 import {Route, Routes, useLocation} from 'react-router-dom'
@@ -32,7 +32,9 @@ export default function Tree({Component, children}: TreeProps) {
             <Component/>
           </Box>
           <Box ref={ref} width={{xs: '100%', md: `calc(100% - ${width}px)`}} displayPrint="none">
-            <Component/>
+            <Container maxWidth="md">
+              <Component/>
+            </Container>
             <Box
               position="fixed"
               top={0}

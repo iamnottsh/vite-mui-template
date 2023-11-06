@@ -1,4 +1,4 @@
-import {Divider, List, ListItemButton, ListItemText} from '@mui/material'
+import {Breadcrumbs, Divider, Link, List, ListItem, ListItemButton, ListItemText} from '@mui/material'
 import {Route, Routes} from 'react-router-dom'
 import {TreeProps} from '../Tree.tsx'
 
@@ -7,9 +7,11 @@ export default function Navi({children, path}: TreeProps & {path: string[]}) {
     <Routes>
       <Route index element={
         <List>
-          <ListItemButton component="a" href={`/${path.slice(0, path.length - 1).join('/')}`}>
-            <ListItemText primary="返回"/>
-          </ListItemButton>
+          <ListItem>
+            <Breadcrumbs>
+              {path.map((value, index) => <Link key={index} href={`/${path.slice(0, index + 1).join('/')}`}>{value}</Link>)}
+            </Breadcrumbs>
+          </ListItem>
           <Divider/>
           {children?.map(([page]) =>
             <ListItemButton key={page} component="a" href={`/${path.concat(page).join('/')}`}>

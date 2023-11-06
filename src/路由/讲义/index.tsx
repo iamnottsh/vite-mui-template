@@ -18,17 +18,17 @@ export default function 讲义() {
       <Box display="none" displayPrint="block">
         <Tree {...tree}/>
       </Box>
-      <Box left={width} width={{xs: '100%', md: `calc(100% - ${width}px)`}} displayPrint="none">
+      <Box position="absolute" right={0} width={{xs: '100%', xl: `calc(100% - ${width}px)`}} displayPrint="none">
         <Box
           position="fixed"
           top={0}
           left={0}
           height="100%"
           overflow="auto"
-          width={{xs: 0, md: width}}
+          width={{xs: 0, xl: width}}
         >
           <Toolbar/>
-          <Navi {...tree} path={useLocation().pathname.split('/').slice(1, 2)}/>
+          <Navi {...tree} path={[decodeURIComponent(useLocation().pathname.split('/')[1])]}/>
         </Box>
         <Tree {...tree}/>
       </Box>
