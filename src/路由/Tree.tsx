@@ -12,11 +12,7 @@ const width = 240
 
 export default function Tree({Component, children}: TreeProps) {
   const ref = useRef<HTMLDivElement | null>(null)
-  const [toc, setToc] = useState<{
-    title: string,
-    id: string,
-    level: number
-  }[]>()
+  const [toc, setToc] = useState<[string, string, number][]>()
   useEffect(() => {
     const {current} = ref
     if (!current) return
@@ -24,7 +20,7 @@ export default function Tree({Component, children}: TreeProps) {
     setToc(Array.from(current.querySelectorAll('h1,h2,h3,h4,h5,h6')).map(value => {
       const title = value.textContent ?? '', id = slugger.slug(title)
       value.id = id
-      return {title, id, level: Number(value.tagName.substring(1))}
+      return [title, id, Number(value.tagName.substring(1))]
     }))
   }, [ref])
   const {hash} = useLocation()
@@ -47,7 +43,7 @@ export default function Tree({Component, children}: TreeProps) {
             >
               <Toolbar/>
               <List>
-                {toc?.map(({title, id, level}) =>
+                {toc?.map(([title, id, level]) =>
                   <ListItemButton key={id} href={`#${id}`} selected={`#${encodeURIComponent(id)}` === hash}>
                     <ListItemText primary={title} primaryTypographyProps={{noWrap: true}} sx={{pl: (level - 1) << 1}}/>
                   </ListItemButton>)}
