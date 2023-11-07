@@ -1,5 +1,5 @@
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft'
-import {Box, Container, Drawer, Fab, List, ListItemButton, ListItemText, Toolbar} from '@mui/material'
+import {Box, Container, Drawer, Fab, List, ListItemButton, ListItemText, Toolbar, useMediaQuery, useTheme} from '@mui/material'
 import BananaSlug from 'github-slugger'
 import {ReactNode, useEffect, useRef, useState} from 'react'
 import {useLocation} from 'react-router-dom'
@@ -51,18 +51,18 @@ export default function Markdown({children, main}: {children?: ReactNode, main?:
           {list}
         </Box>
         <Fab
-          size="small"
           onClick={show}
           sx={{
             position: 'fixed',
             bottom: '50%',
-            right: 0, transform: 'translateX(60%)',
+            right: 0,
+            transform: 'translateX(75%)',
             display: {xs: 'flex', md: 'none'},
           }}
         >
-          <ArrowLeftIcon sx={{transform: 'translateX(-40%)'}}/>
+          <ArrowLeftIcon sx={{transform: 'translateX(-75%)'}}/>
         </Fab>
-        <Drawer open={open} anchor="right" onClose={hide} PaperProps={{sx: {width: {xs: width, md: 0}}}}>
+        <Drawer open={useMediaQuery(useTheme().breakpoints.down('md')) && open} anchor="right" onClose={hide} PaperProps={{sx: {width}}}>
           {list}
         </Drawer>
       </Box>
