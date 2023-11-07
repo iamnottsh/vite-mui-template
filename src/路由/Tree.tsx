@@ -11,7 +11,7 @@ export default function Tree({Component, children, main}: TreeProps & {main?: bo
   return (
     <Routes>
       <Route index element={<Markdown main={main}><Component/></Markdown>}/>
-      {children?.map(([page, node]) => <Route key={page} path={`${page}/*`} element={<Tree {...node}/>}/>)}
+      {children?.map(([page, node]) => <Route key={page} path={`${page}/*`} element={<Tree {...node} main={main}/>}/>)}
     </Routes>
   )
 }

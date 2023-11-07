@@ -1,4 +1,4 @@
 import {TreeProps} from '../../Tree.tsx'
-import 第一 from './第一'
+import 达成目标 from './达成目标'
 
-export default Object.entries<TreeProps>({第一})
+export default Object.entries<TreeProps>({达成目标})
