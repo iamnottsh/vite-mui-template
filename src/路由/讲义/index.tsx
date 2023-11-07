@@ -46,7 +46,7 @@ export default function 讲义() {
         >
           <ArrowRightIcon sx={{transform: 'translateX(75%)'}}/>
         </Fab>
-        <Drawer open={useMediaQuery(useTheme().breakpoints.down('xl')) && open} onClose={hide} PaperProps={{sx: {width}}}>
+        <Drawer open={useMediaQuery(useTheme().breakpoints.down('xl')) && open} onClose={hide} PaperProps={{onClick: hide, sx: {width}}}>
           {list}
         </Drawer>
         <Tree {...tree} main/>
