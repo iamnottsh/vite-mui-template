@@ -7,7 +7,7 @@ import useOpen from './useOpen.ts'
 
 const width = 240
 
-export default function TreeElement({children, main}: {children?: ReactNode, main?: boolean}) {
+export default function Markdown({children, main}: {children?: ReactNode, main?: boolean}) {
   const ref = useRef<HTMLDivElement | null>(null)
   const [toc, setToc] = useState<[string, string, number][]>()
   useEffect(() => {
