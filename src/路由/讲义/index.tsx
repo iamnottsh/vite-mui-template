@@ -30,7 +30,7 @@ export default function 讲义() {
           <Toolbar/>
           <Navi {...tree} path={[decodeURIComponent(useLocation().pathname.split('/')[1])]}/>
         </Box>
-        <Tree {...tree}/>
+        <Tree {...tree} main/>
       </Box>
     </>
   )

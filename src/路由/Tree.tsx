@@ -12,10 +12,11 @@ export interface TreeProps {
 
 const width = 240
 
-export default function Tree({Component, children}: TreeProps) {
+export default function Tree({Component, children, main}: TreeProps & {main?: boolean}) {
   const ref = useRef<HTMLDivElement | null>(null)
   const [toc, setToc] = useState<[string, string, number][]>()
   useEffect(() => {
+    if (!main) return
     const {current} = ref
     if (!current) return
     const slugger = new BananaSlug()
@@ -24,7 +25,7 @@ export default function Tree({Component, children}: TreeProps) {
       value.id = id
       return [title, id, Number(value.tagName.substring(1))]
     }))
-  }, [ref])
+  }, [ref, main])
   const {hash} = useLocation()
   const list =
     <List>
