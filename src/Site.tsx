@@ -92,6 +92,7 @@ export default function Site() {
         <Toolbar/>
       </Box>
       <Box sx={{
+        py: 2,
         ...height !== undefined && {
           '& :target:before': {
             display: 'block',

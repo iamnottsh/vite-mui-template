@@ -62,7 +62,8 @@ export default function Markdown({children, main}: {children?: ReactNode, main?:
         >
           <ArrowLeftIcon sx={{transform: 'translateX(-75%)'}}/>
         </Fab>
-        <Drawer open={useMediaQuery(useTheme().breakpoints.down('md')) && open} anchor="right" onClose={hide} PaperProps={{onClick: hide, sx: {width}}}>
+        <Drawer open={useMediaQuery(useTheme().breakpoints.down('md')) && open} anchor="right" onClose={hide}
+                PaperProps={{onClick: hide, sx: {width}}}>
           {list}
         </Drawer>
       </Box>
