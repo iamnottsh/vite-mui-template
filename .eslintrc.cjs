@@ -15,4 +15,13 @@ module.exports = {
       {allowConstantExport: true},
     ],
   },
+  overrides: [
+    {
+      files: ['*.mdx'],
+      extends: 'plugin:mdx/recommended',
+      settings: {
+        'mdx/code-blocks': true,
+      },
+    },
+  ],
 }
